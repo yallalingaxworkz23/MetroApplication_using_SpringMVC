@@ -24,12 +24,13 @@ public class UserValidationServiceImpl implements UserValidationService{
 	@Override
 	public String forEamilid(String emailid) {
 	 UserEntity userentity= userRepo.onEmailid(emailid);
-		 if(userentity!=null && userentity.getEmailid().equals(emailid)) {
+	 
+		 if( userentity!=null && userentity.getEmailid().equals(emailid)) {
 			 return "";
-		 }else {
-		      return "user doesn't exist please register.";
 		 }
-	
+		 return "user doesn't exist please register.";
+	 
+		     
 	}
 	
 }

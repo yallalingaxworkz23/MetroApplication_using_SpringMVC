@@ -43,15 +43,13 @@ public class UserLoginServiceImpl implements UserLoginService {
 
 	@Override
 	public boolean onSave(UserLoginDTO userLoginDTO) {
+	    
 		UserEntity userentity = userRegisterRepo.onEmailid(userLoginDTO.getEmailid());
 		if(userentity!=null) {
 			if(userentity.isAccountblocked()) {
-				return true;
+				return false;
 			}
-			if (userentity != null && userentity.getNoAttemtpt() < 2 ) {
-				
-				if (userentity.getEmailid().equals(userLoginDTO.getEmailid())
-				&& userentity.getPassword().equals(userLoginDTO.getPassword())) {
+			if (userentity.getPassword().equals(userLoginDTO.getPassword()) ) {
 					userentity.setAccountblocked(false);
 					userentity.setNoAttemtpt(0);
 					userRegisterRepo.onUpdate(userentity);
@@ -63,18 +61,17 @@ public class UserLoginServiceImpl implements UserLoginService {
 					return userLoginRepo.onSave(userLoginEntity);
 
 				}
-				if (userentity.getEmailid().equals(userLoginDTO.getEmailid())) {
+			   if(userentity.getNoAttemtpt()>=2) {
+				   log.info("invoking in the userentity.getNoAttemtpt()>=3.."+userentity.getNoAttemtpt());
+				   userentity.setAccountblocked(true);
+				   userRegisterRepo.onUpdate(userentity);
+			       sendmail(userentity.getEmailid(),"AC Lock", "You are Account is locked please reset the password");
+				   return false;
+				   
+			   }
 					userentity.setNoAttemtpt(userentity.getNoAttemtpt() + 1);
 					userRegisterRepo.onUpdate(userentity);
-					return false;
-				}
-	         
-			}
-	          userentity.setAccountblocked(true);
-	          userRegisterRepo.onUpdate(userentity);
-	          sendmail(userentity.getEmailid(),"AC Lock", "You are Account is locked please reset the password");
-			return false;
-
+					return false;   
 		}
 		return false;
 	}
@@ -144,26 +141,32 @@ public class UserLoginServiceImpl implements UserLoginService {
 
 	@Override
 	public String onEmailSent(String emailid) {
-		UserEntity userentity = userRegisterRepo.onEmailid(emailid);
-		if (userentity != null && userentity.getEmailid().equals(emailid)) {
-			String otp= generateRandomPassword();
-
-			if (sendmail(emailid, "Change-Password", "otp for change password is.." +otp)) {
-				log.info("otp id." + otp);
-				userentity.setOtp(otp);
-				if (userRegisterRepo.onUpdate(userentity)) {
-					return "otp sent to mail";
-				}
-			}
-			return "not sent";
+		if(emailid=="") {
+			return "emali should not be empty";
+		
 		}
-		return "plese do register.";
-	}
+			UserEntity userentity = userRegisterRepo.onEmailid(emailid);
+			if (userentity != null && userentity.getEmailid().equals(emailid)) {
+				String otp= generateRandomPassword();
+
+				if (sendmail(emailid, "Change-Password", "otp for change password is.." +otp)) {
+					log.info("otp id." + otp);
+					userentity.setOtp(otp);
+					if (userRegisterRepo.onUpdate(userentity)) {
+						return "otp sent to mail";
+					}
+				}
+				return "not sent";
+			}
+			return "plese do register.";
+
+		}
+		
 
 	@Override
 	public String onOtpLogin(String emailid, String otp) {
 		log.info("to know the value of otp.."+otp);
-		if(otp=="") {
+		if(otp.isEmpty()) {
 			return "otp not be empty";
 		}
 			UserEntity userEntity = userRegisterRepo.onEmailid(emailid);
@@ -177,6 +180,9 @@ public class UserLoginServiceImpl implements UserLoginService {
 
 	@Override
 	public boolean onResetPassword(String emailid, String password, String conformpassword) {
+		if(password.isEmpty() && conformpassword.isEmpty()) {
+			return false;
+		}
 		UserEntity userEntity = userRegisterRepo.onEmailid(emailid);
 		userEntity.setPassword(password);
 		userEntity.setConformpassword(conformpassword);

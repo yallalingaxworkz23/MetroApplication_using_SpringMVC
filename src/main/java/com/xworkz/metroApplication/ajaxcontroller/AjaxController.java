@@ -32,18 +32,12 @@ public class AjaxController {
 	public String onemailidexist(@PathVariable("emailid") String emailid) {
 		log.info("invoking in the onemailidexist..method.. "+emailid);
 		return userValidationService.forEamilid(emailid);
-//		String foremail = 
-//		if (foremail != null) {
-//                  log.info("emialid is founded..");
-//                  return foremail;
-//		}
-//
-//		return null;
 	}
 	
 	
 	@GetMapping(value ="/otpgenerate/{emailid}")
-	public String onOtpgenerate(@PathVariable String emailid) {
+	public String onOtpgenerate(@PathVariable("emailid") String emailid) {
+		
 		log.info("invoking in the otpgenetate method.."+emailid);
 		return userLoginService.onEmailSent(emailid);
 	}

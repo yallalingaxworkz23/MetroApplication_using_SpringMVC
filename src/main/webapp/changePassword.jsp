@@ -52,7 +52,7 @@
 
 						<div class="mb-3">
 				<label for="OTP" class="form-label" style="margin-right: 290px;">OTP</label><br><span id="ajaxforotpsend" style="color: green"></span>
-							<span style="color:red;">${message}</span> <input type="text" class="form-control" id="otp" name="otp" >
+							<span id="errorMsg" style="color:red;">${message}</span> <input type="text" class="form-control" id="otp" name="otp" >
 						</div>
 
 
@@ -113,7 +113,7 @@
 	             xhttp.onload=function(){
 	             console.log(this);
 	             document.getElementById("ajaxemailvalid").innerHTML=this.responseText;
-	            
+	             
 	             
 	             }  	 
 	             
@@ -134,6 +134,7 @@
              xhttp.onload=function(){
              console.log(this);
              document.getElementById("ajaxforotpsend").innerHTML=this.responseText;
+             document.getElementById("errorMsg").style.display ="none";
              button.setAttribute("Disabled", "");
 
 			

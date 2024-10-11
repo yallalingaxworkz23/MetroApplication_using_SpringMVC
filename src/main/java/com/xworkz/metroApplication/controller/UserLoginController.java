@@ -42,16 +42,13 @@ public class UserLoginController {
 		HttpSession httpSession= httpServletRequest.getSession(true);
 	//	httpSession.setAttribute("email", userLoginDTO.getEmailid());
 		if (userLoginService.onSave(userLoginDTO)) {
-			
-			UserEntity userEntity= userRegisterRepo.onEmailid(userLoginDTO.getEmailid());
-			if(userEntity.isAccountblocked()==false) {
 				model.addAttribute("username", userLoginDTO.getEmailid());
-				return "profile";
-			}else {
-				model.addAttribute("lock", "account locked reset the password");
+				return "profile";					
+		}
+		UserEntity userEntity= userRegisterRepo.onEmailid(userLoginDTO.getEmailid());
+		if(userEntity.isAccountblocked()) {
+			model.addAttribute("lock", "account locked reset the password");
 				return "login";
-					
-			}
 		}
 		model.addAttribute("username", userLoginDTO.getEmailid());
 		model.addAttribute("perror", "password is incorrect.");
@@ -73,8 +70,10 @@ public class UserLoginController {
 	public String onResetPassword(String emailid, String password, String conformpassword, Model model) {
 
 		if (userLoginService.onResetPassword(emailid, password, conformpassword)) {
+			
 			return "Index";
 		}
+		model.addAttribute("email", emailid);
 		model.addAttribute("passerror", "password is not updated..");
 		return "passwordReset";
 
