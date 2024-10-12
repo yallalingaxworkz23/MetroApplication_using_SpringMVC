@@ -1,5 +1,7 @@
 package com.xworkz.metroApplication.entity;
 
+import java.time.LocalTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -64,6 +66,15 @@ public class UserEntity {
 
 	@Column(name="u_otp")
 	private String otp;
+	
 	@Column(name="u_accountblocked")
 	private boolean accountblocked;
+	
+	@Column(name="u_otpgeneratertime")
+	private LocalTime otpnewlygeneratedtime;
+	
+	@Column(name="u_otpoldgeneratedtime")
+	private LocalTime otpoldgeneratedtime; 
+	
+	
 }

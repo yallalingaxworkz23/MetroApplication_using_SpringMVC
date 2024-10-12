@@ -38,8 +38,9 @@ public class AjaxController {
 	@GetMapping(value ="/otpgenerate/{emailid}")
 	public String onOtpgenerate(@PathVariable("emailid") String emailid) {
 		
-		log.info("invoking in the otpgenetate method.."+emailid);
-		return userLoginService.onEmailSent(emailid);
+			log.info("invoking in the otpgenetate method.."+emailid);
+			return userLoginService.onEmailSent(emailid);	
+		
 	}
 	
 

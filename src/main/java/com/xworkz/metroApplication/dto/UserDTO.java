@@ -1,5 +1,7 @@
 package com.xworkz.metroApplication.dto;
 
+import java.time.LocalTime;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -78,4 +80,6 @@ public class UserDTO {
 	
 	private String otp;
 	private boolean accountblocked;
+	private LocalTime otpnewlygeneratedtime;
+	private LocalTime otpoldgeneratedtime; 
 }

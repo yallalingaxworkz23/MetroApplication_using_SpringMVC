@@ -52,6 +52,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 			if (userentity.getPassword().equals(userLoginDTO.getPassword()) ) {
 					userentity.setAccountblocked(false);
 					userentity.setNoAttemtpt(0);
+					userentity.setOtpoldgeneratedtime(LocalTime.now());
 					userRegisterRepo.onUpdate(userentity);
 					
 					userLoginDTO.setLogindate(LocalDate.now());
@@ -152,6 +153,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 				if (sendmail(emailid, "Change-Password", "otp for change password is.." +otp)) {
 					log.info("otp id." + otp);
 					userentity.setOtp(otp);
+					userentity.setOtpnewlygeneratedtime(LocalTime.now());
 					if (userRegisterRepo.onUpdate(userentity)) {
 						return "otp sent to mail";
 					}
@@ -170,6 +172,9 @@ public class UserLoginServiceImpl implements UserLoginService {
 			return "otp not be empty";
 		}
 			UserEntity userEntity = userRegisterRepo.onEmailid(emailid);
+			if(userEntity!=null && userEntity.getOtpnewlygeneratedtime().isBefore(userEntity.getOtpoldgeneratedtime())) {
+				return "otp is expired";
+			}
 			if (userEntity != null && userEntity.getEmailid().equals(emailid) && userEntity.getOtp().equals(otp)) {
 				return "";
 			}
@@ -188,6 +193,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 		userEntity.setConformpassword(conformpassword);
 		userEntity.setAccountblocked(false);
 		userEntity.setNoAttemtpt(0);
+		userEntity.setOtpoldgeneratedtime(LocalTime.now());
 		return userRegisterRepo.onUpdate(userEntity);
 	}
 
