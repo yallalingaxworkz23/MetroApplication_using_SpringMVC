@@ -46,10 +46,13 @@ public class UserLoginController {
 				return "profile";					
 		}
 		UserEntity userEntity= userRegisterRepo.onEmailid(userLoginDTO.getEmailid());
-		if(userEntity.isAccountblocked()) {
-			model.addAttribute("lock", "account locked reset the password");
-				return "login";
+		if(userEntity!=null) {
+			if(userEntity.isAccountblocked()) {
+				model.addAttribute("lock", "account locked reset the password");
+					return "login";
+			}
 		}
+		
 		model.addAttribute("username", userLoginDTO.getEmailid());
 		model.addAttribute("perror", "password is incorrect.");
 		return "login";

@@ -25,7 +25,7 @@
     <div class="card-body"><span id="info"></span>
       <h5 class="card-title"> Provide Required Info</h5>
       
-      <form action="userupdate" method="post" onclick="form()">
+      <form action="userupdate" method="post" onclick="form()" >
       
       <div class="mb-3">
           <label for="FirstName" class="form-label" style="margin-right: 290px;">First-Name</label> <br><span id="validname"></span>
@@ -47,6 +47,11 @@
           <label for="ContactNo" class="form-label" style="margin-right: 290px;">Contact-No</label><br><span id="contactvalid"></span>
           <input type="teli" class="form-control" name="contactno" id="contactno" onblur="forContactvalidation()" value="${userDTO.contactno }">
         </div>
+        
+<!--         <div class="mb-3"> -->
+<!--           <label for="fileuplode" class="form-label" style="margin-right: 290px;">File-Uplode</label><br><span id="contactvalid"></span> -->
+<!--           <input type="file" class="form-control" name="filename" id="filename" > -->
+<!--         </div> -->
         
         <div class="mb-3">
           <label for="gender" class="form-label">Gender</label> 
@@ -85,7 +90,7 @@
         </div>
         
        <input type="text" name="id" hidden value="${userDTO.id}"> 
-     <!--    <button type="submit" class="btn btn-primary">GenerateOTP</button> -->
+     
         <button type="submit" id="button"  class="btn btn-primary">Submit</button>
       </form>
     

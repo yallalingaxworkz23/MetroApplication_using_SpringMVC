@@ -82,4 +82,6 @@ public class UserDTO {
 	private boolean accountblocked;
 	private LocalTime otpnewlygeneratedtime;
 	private LocalTime otpoldgeneratedtime; 
+	private String filename;
+	private String fileContentType;
 }

@@ -45,7 +45,9 @@ public class UserLoginServiceImpl implements UserLoginService {
 	public boolean onSave(UserLoginDTO userLoginDTO) {
 	    
 		UserEntity userentity = userRegisterRepo.onEmailid(userLoginDTO.getEmailid());
+		log.info("entity is .."+userentity);
 		if(userentity!=null) {
+			log.info("to know is null are not");
 			if(userentity.isAccountblocked()) {
 				return false;
 			}

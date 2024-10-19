@@ -76,5 +76,10 @@ public class UserEntity {
 	@Column(name="u_otpoldgeneratedtime")
 	private LocalTime otpoldgeneratedtime; 
 	
+	@Column(name="u_filename")
+	private String filename;
+	
+	@Column(name="u_fileContentType")
+	private String fileContentType;
 	
 }

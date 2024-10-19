@@ -23,6 +23,7 @@ public class UserRegisterServiceImpl implements UserRegisterService{
 		UserEntity userEntity=new UserEntity();
 		userDTO.setNoAttemtpt(0);
 		userDTO.setAccountblocked(false);
+		userDTO.setFilename("temp.jpg");
 		BeanUtils.copyProperties(userDTO, userEntity);
 		 boolean tonknowsaved= userRepo.onSaveuser(userEntity);
 		 log.info("to know the what value is return.."+tonknowsaved);
