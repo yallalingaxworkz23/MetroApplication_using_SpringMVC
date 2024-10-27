@@ -24,8 +24,8 @@
 		<div class="container-fluid">
 			<img
 				src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
-				alt="logo" style="height: 80px; width: 160px;"> <a
-				class="navbar-brand" href="#">Sticky top</a>
+				alt="logo" style="height: 80px; width: 160px;"> 
+				<a class="navbar-brand" href="#">Sticky top</a>
 		</div>
 	</nav>
 	<center>

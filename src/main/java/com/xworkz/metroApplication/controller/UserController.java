@@ -110,7 +110,7 @@ public class UserController {
 
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            model.addAttribute("username", emailid);
+//            model.addAttribute("username", emailid);
             return "profile";
         }
         UserDTO userDTO= userRegisterService.onFindByEmailid(emailid);
@@ -128,7 +128,7 @@ public class UserController {
             	model.addAttribute("filename", userDTO.getFilename());
             	HttpSession httpSession= httpServletRequest.getSession(true);
             	httpSession.setAttribute("picPath", userDTO.getFilename());
-            	model.addAttribute("username", userDTO.getEmailid());
+//            	model.addAttribute("username", userDTO.getEmailid());
             	
             	log.info("invoking in the file uploded.. method is updated are not.. "+userDTO.getEmailid());
             	return "profile";

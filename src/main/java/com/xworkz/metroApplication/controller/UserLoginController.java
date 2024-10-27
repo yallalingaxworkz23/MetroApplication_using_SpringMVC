@@ -40,9 +40,9 @@ public class UserLoginController {
 	@PostMapping("userLogin")
 	public String onSaveLogin(UserLoginDTO userLoginDTO, Model model,HttpServletRequest httpServletRequest) {
 		HttpSession httpSession= httpServletRequest.getSession(true);
-	//	httpSession.setAttribute("email", userLoginDTO.getEmailid());
+		httpSession.setAttribute("email", userLoginDTO.getEmailid());
 		if (userLoginService.onSave(userLoginDTO)) {
-				model.addAttribute("username", userLoginDTO.getEmailid());
+				//model.addAttribute("username", userLoginDTO.getEmailid());
 				return "profile";					
 		}
 		UserEntity userEntity= userRegisterRepo.onEmailid(userLoginDTO.getEmailid());
